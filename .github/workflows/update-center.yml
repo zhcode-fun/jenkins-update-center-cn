@@ -23,6 +23,7 @@ jobs:
           git config --global user.email action@github.com
           git config --global user.name action
           sed -i 's#https://updates.jenkins.io/download/#https://mirrors.ustc.edu.cn/jenkins/#g' ./update-center.json
+          sed -i 's#www.google.com#www.qq.com#' ./update-center.json
           git add ./update-center.json
           git commit -m "update update-center.json"
 
