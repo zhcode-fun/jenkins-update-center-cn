@@ -16,7 +16,9 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Download update-center.json
-        run: curl https://updates.jenkins.io/update-center.json > ./update-center.json
+        run: |
+          rm -f ./update-center.json
+          wget https://updates.jenkins.io/update-center.json
         
       - name: replace
         run: |
