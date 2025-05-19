@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+
+name: replace update.jenkins.io
+
+# Controls when the workflow will run
+on:
+  schedule: # execute every 24 hours
+    - cron: "35 23 * * *"
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Download update-center.json
+        run: wget https://updates.jenkins.io/update-center.json
+        
+      - name: replace
+        run: |
+          sed 's#https://updates.jenkins.io/download/#https://mirrors.ustc.edu.cn/jenkins/#g' ./update-center.json
+          git add ./update-center.json
+          git commit -m "update update-center.json"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        
